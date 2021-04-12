@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLocalBands", "MyLocalBands.csproj", "{BCC13F03-DD71-4108-98DD-DF0A6A0AB22D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCC13F03-DD71-4108-98DD-DF0A6A0AB22D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCC13F03-DD71-4108-98DD-DF0A6A0AB22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCC13F03-DD71-4108-98DD-DF0A6A0AB22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCC13F03-DD71-4108-98DD-DF0A6A0AB22D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {007FE936-A9D4-45EE-9A10-FD776A4DD0AD}
+	EndGlobalSection
+EndGlobal
