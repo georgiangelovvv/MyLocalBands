@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyLocalBands.Data.Models;
+using MyLocalBands.Data.Seeding;
 
 namespace MyLocalBands.Data
 {
@@ -24,5 +25,13 @@ namespace MyLocalBands.Data
         public DbSet<Genre> Genres { get; set; }
 
         public DbSet<Song> Songs { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new AlbumTypeConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+            builder.ApplyConfiguration(new CountryConfiguration());
+        }
     }
 }
