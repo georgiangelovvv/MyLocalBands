@@ -32,6 +32,7 @@ namespace MyLocalBands.Data
             builder.ApplyConfiguration(new AlbumTypeConfiguration());
             builder.ApplyConfiguration(new GenreConfiguration());
             builder.ApplyConfiguration(new CountryConfiguration());
+            builder.ApplyConfiguration(new ArtistStatusConfiguration());
         }
     }
 }
