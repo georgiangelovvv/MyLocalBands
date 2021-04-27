@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyLocalBands.Data;
+using MyLocalBands.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,10 +37,13 @@ namespace MyLocalBands
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
             });
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IGetCountsService, GetCountsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

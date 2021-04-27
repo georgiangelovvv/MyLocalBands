@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyLocalBands.Services;
 using MyLocalBands.ViewModels;
+using MyLocalBands.ViewModels.Home;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,16 +13,19 @@ namespace MyLocalBands.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> logger;
+        private readonly IGetCountsService countsService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IGetCountsService countsService)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.countsService = countsService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var viewModel = this.countsService.GetCounts();
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

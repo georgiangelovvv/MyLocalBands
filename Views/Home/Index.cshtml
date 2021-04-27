@@ -1,8 +1,14 @@
-﻿@{
+﻿@model MyLocalBands.ViewModels.Home.IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
+<div class="text-center col-md-4 offset-md-4">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>There are:</p>
+    <ul class="list-group  text-white">
+        <li class="list-group-item bg-success">Artists: @Model.ArtistsCount</li>
+        <li class="list-group-item bg-secondary">Albums: @Model.AlbumsCount</li>
+        <li class="list-group-item bg-info">Songs: @Model.SongsCount</li>
+    </ul>
 </div>
