@@ -386,3 +386,4 @@ C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.cspro
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.dll
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.pdb
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.genruntimeconfig.cache
+C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\Razor\Views\Artists\Create.cshtml.g.cs

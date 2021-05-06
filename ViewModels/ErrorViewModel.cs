@@ -1,5 +1,3 @@
-using System;
-
 namespace MyLocalBands.ViewModels
 {
     public class ErrorViewModel
