@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyLocalBands.CustomValidation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyLocalBands.ViewModels.Artists
 {
@@ -8,6 +9,8 @@ namespace MyLocalBands.ViewModels.Artists
         [MinLength(3)]
         public string Name { get; set; }
 
+        [Required]
+        [CustomCurrentYearRange(1960)]
         public int YearFormed { get; set; }
 
         [Required]
