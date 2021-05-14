@@ -356,7 +356,6 @@ C:\Users\PC\source\repos\MyLocalBands\bin\Debug\netcoreapp3.1\runtimes\win-x86\n
 C:\Users\PC\source\repos\MyLocalBands\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\PC\source\repos\MyLocalBands\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\PC\source\repos\MyLocalBands\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.csprojAssemblyReference.cache
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.AssemblyInfoInputs.cache
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.AssemblyInfo.cs
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.csproj.CoreCompileInputs.cache
@@ -387,3 +386,4 @@ C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.dll
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.pdb
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.genruntimeconfig.cache
 C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\Razor\Views\Artists\Create.cshtml.g.cs
+C:\Users\PC\source\repos\MyLocalBands\obj\Debug\netcoreapp3.1\MyLocalBands.csprojAssemblyReference.cache

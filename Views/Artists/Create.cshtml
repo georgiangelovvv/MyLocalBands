@@ -21,6 +21,21 @@
         <textarea asp-for="Biography" class="form-control" rows="5"> </textarea>
         <span asp-validation-for="Biography" class="text-danger"></span>
     </div>
+    <div class="form-group">
+        <label asp-for="CountryId"></label>
+        <select asp-for="CountryId" asp-items="@this.Model.Countries" class="form-control"> </select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreId"></label>
+        <select asp-for="GenreId" asp-items="@this.Model.Genres" class="form-control"> </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ArtistStatusId"></label>
+        <select asp-for="ArtistStatusId" asp-items="@this.Model.ArtistStatuses" class="form-control"> </select>
+        <span asp-validation-for="ArtistStatusId" class="text-danger"></span>
+    </div>
     <input type="submit" class="btn btn-primary" />
 </form>
 

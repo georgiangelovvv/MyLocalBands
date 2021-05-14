@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyLocalBands.Data;
 using MyLocalBands.Services;
+using MyLocalBands.Services.Contracts;
 
 namespace MyLocalBands
 {
@@ -38,6 +39,9 @@ namespace MyLocalBands
             services.AddRazorPages();
 
             services.AddTransient<IGetCountsService, GetCountsService>();
+            services.AddTransient<ICountriesService, CountriesService>();
+            services.AddTransient<IGenresService, GenresService>();
+            services.AddTransient<IArtistStatusesService, ArtistStatusesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
