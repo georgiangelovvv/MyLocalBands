@@ -10,8 +10,8 @@ using MyLocalBands.Data;
 namespace MyLocalBands.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210425150902_AddedArtistStatusSeeder")]
-    partial class AddedArtistStatusSeeder
+    [Migration("20210519234631_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

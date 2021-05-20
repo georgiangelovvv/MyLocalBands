@@ -26,6 +26,10 @@ namespace MyLocalBands.Data
 
         public DbSet<Song> Songs { get; set; }
 
+        public DbSet<ArtistImage> ArtistImages { get; set; }
+
+        public DbSet<AlbumArtwork> AlbumArtworks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

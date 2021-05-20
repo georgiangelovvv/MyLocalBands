@@ -16,8 +16,6 @@ namespace MyLocalBands.Data.Models
 
         public DateTime ReleaseDate { get; set; }
 
-        public string Cover { get; set; }
-
         public int ArtistId { get; set; }
 
         public Artist Artist { get; set; }
@@ -27,5 +25,7 @@ namespace MyLocalBands.Data.Models
         public AlbumType AlbumType { get; set; }
 
         public ICollection<Song> Songs { get; set; }
+
+        public AlbumArtwork Artwork { get; set; }
     }
 }

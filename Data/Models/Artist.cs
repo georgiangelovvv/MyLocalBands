@@ -18,10 +18,6 @@ namespace MyLocalBands.Data.Models
 
         public string Biography { get; set; }
 
-        public string Picture { get; set; }
-
-        public string Logo { get; set; }
-
         public int ArtistStatusId { get; set; }
 
         public ArtistStatus ArtistStatus { get; set; }
@@ -39,5 +35,7 @@ namespace MyLocalBands.Data.Models
         public IdentityUser CreatedByUser { get; set; }
 
         public ICollection<Album> Albums { get; set; }
+
+        public ArtistImage Picture { get; set; }
     }
 }

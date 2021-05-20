@@ -10,8 +10,8 @@ using MyLocalBands.Data;
 namespace MyLocalBands.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210420173241_AddedCountrySeeder")]
-    partial class AddedCountrySeeder
+    [Migration("20210520213418_AddedArtistImagesAndAlbumArtworksModels")]
+    partial class AddedArtistImagesAndAlbumArtworksModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -234,9 +234,6 @@ namespace MyLocalBands.Data.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Cover")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -250,6 +247,25 @@ namespace MyLocalBands.Data.Migrations
                     b.HasIndex("ArtistId");
 
                     b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("MyLocalBands.Data.Models.AlbumArtwork", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId")
+                        .IsUnique();
+
+                    b.ToTable("AlbumArtworks");
                 });
 
             modelBuilder.Entity("MyLocalBands.Data.Models.AlbumType", b =>
@@ -326,13 +342,7 @@ namespace MyLocalBands.Data.Migrations
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("YearFormed")
@@ -351,6 +361,25 @@ namespace MyLocalBands.Data.Migrations
                     b.ToTable("Artists");
                 });
 
+            modelBuilder.Entity("MyLocalBands.Data.Models.ArtistImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId")
+                        .IsUnique();
+
+                    b.ToTable("ArtistImages");
+                });
+
             modelBuilder.Entity("MyLocalBands.Data.Models.ArtistStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -364,6 +393,33 @@ namespace MyLocalBands.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ArtistStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Split-up"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "On hold"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Changed name"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Unknown"
+                        });
                 });
 
             modelBuilder.Entity("MyLocalBands.Data.Models.Country", b =>
@@ -1545,6 +1601,15 @@ namespace MyLocalBands.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyLocalBands.Data.Models.AlbumArtwork", b =>
+                {
+                    b.HasOne("MyLocalBands.Data.Models.Album", "Album")
+                        .WithOne("Artwork")
+                        .HasForeignKey("MyLocalBands.Data.Models.AlbumArtwork", "AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MyLocalBands.Data.Models.Artist", b =>
                 {
                     b.HasOne("MyLocalBands.Data.Models.ArtistStatus", "ArtistStatus")
@@ -1566,6 +1631,15 @@ namespace MyLocalBands.Data.Migrations
                     b.HasOne("MyLocalBands.Data.Models.Genre", "Genre")
                         .WithMany("Artists")
                         .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MyLocalBands.Data.Models.ArtistImage", b =>
+                {
+                    b.HasOne("MyLocalBands.Data.Models.Artist", "Artist")
+                        .WithOne("Picture")
+                        .HasForeignKey("MyLocalBands.Data.Models.ArtistImage", "ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

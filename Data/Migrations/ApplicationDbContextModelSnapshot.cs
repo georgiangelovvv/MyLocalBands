@@ -232,9 +232,6 @@ namespace MyLocalBands.Data.Migrations
                     b.Property<int>("ArtistId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Cover")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -248,6 +245,25 @@ namespace MyLocalBands.Data.Migrations
                     b.HasIndex("ArtistId");
 
                     b.ToTable("Albums");
+                });
+
+            modelBuilder.Entity("MyLocalBands.Data.Models.AlbumArtwork", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AlbumId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlbumId")
+                        .IsUnique();
+
+                    b.ToTable("AlbumArtworks");
                 });
 
             modelBuilder.Entity("MyLocalBands.Data.Models.AlbumType", b =>
@@ -324,13 +340,7 @@ namespace MyLocalBands.Data.Migrations
                     b.Property<int>("GenreId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Picture")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("YearFormed")
@@ -347,6 +357,25 @@ namespace MyLocalBands.Data.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Artists");
+                });
+
+            modelBuilder.Entity("MyLocalBands.Data.Models.ArtistImage", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Extension")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId")
+                        .IsUnique();
+
+                    b.ToTable("ArtistImages");
                 });
 
             modelBuilder.Entity("MyLocalBands.Data.Models.ArtistStatus", b =>
@@ -1570,6 +1599,15 @@ namespace MyLocalBands.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyLocalBands.Data.Models.AlbumArtwork", b =>
+                {
+                    b.HasOne("MyLocalBands.Data.Models.Album", "Album")
+                        .WithOne("Artwork")
+                        .HasForeignKey("MyLocalBands.Data.Models.AlbumArtwork", "AlbumId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MyLocalBands.Data.Models.Artist", b =>
                 {
                     b.HasOne("MyLocalBands.Data.Models.ArtistStatus", "ArtistStatus")
@@ -1591,6 +1629,15 @@ namespace MyLocalBands.Data.Migrations
                     b.HasOne("MyLocalBands.Data.Models.Genre", "Genre")
                         .WithMany("Artists")
                         .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MyLocalBands.Data.Models.ArtistImage", b =>
+                {
+                    b.HasOne("MyLocalBands.Data.Models.Artist", "Artist")
+                        .WithOne("Picture")
+                        .HasForeignKey("MyLocalBands.Data.Models.ArtistImage", "ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
