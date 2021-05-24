@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyLocalBands.CustomValidation
 {
-    public class CustomCurrentYearRangeAttribute : ValidationAttribute, IClientModelValidator
+    public class CurrentYearRangeAttribute : ValidationAttribute, IClientModelValidator
     {
-        public CustomCurrentYearRangeAttribute(int minYear)
+        public CurrentYearRangeAttribute(int minYear)
         {
             this.MinYear = minYear;
             this.MaxYear = DateTime.UtcNow.Year;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MyLocalBands.CustomValidation;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,16 +13,17 @@ namespace MyLocalBands.ViewModels.Artists
         public string Name { get; set; }
 
         [Required]
-        [CustomCurrentYearRange(1960)]
+        [CurrentYearRange(1960)]
         public int YearFormed { get; set; }
 
         [Required]
         [MinLength(150)]
         public string Biography { get; set; }
 
-        public string Picture { get; set; }
-
-        public string Logo { get; set; }
+        [Required]
+        [AllowedExtensions(new string[] { ".png", ".jpg", ".jpeg" })]
+        [MaxFileSize(3)]
+        public IFormFile Image { get; set; }
 
         public int CountryId { get; set; }
 
@@ -34,7 +36,5 @@ namespace MyLocalBands.ViewModels.Artists
         public IEnumerable<SelectListItem> Genres { get; set; }
 
         public IEnumerable<SelectListItem> ArtistStatuses { get; set; }
-
-
     }
 }

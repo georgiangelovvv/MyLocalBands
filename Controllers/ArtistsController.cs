@@ -23,11 +23,11 @@ namespace MyLocalBands.Controllers
 
         public IActionResult Create()
         {
-            var viewModel = new CreateArtistInputModel();
-            viewModel.Countries = this.countriesService.GetAll();
-            viewModel.Genres = this.genresService.GetAll();
-            viewModel.ArtistStatuses = this.artistStatusesService.GetAll();
-            return this.View(viewModel);
+            var inputModel = new CreateArtistInputModel();
+            inputModel.Countries = this.countriesService.GetAll();
+            inputModel.Genres = this.genresService.GetAll();
+            inputModel.ArtistStatuses = this.artistStatusesService.GetAll();
+            return this.View(inputModel);
         }
 
         [HttpPost]
@@ -35,7 +35,10 @@ namespace MyLocalBands.Controllers
         {
             if (!this.ModelState.IsValid) 
             {
-                return this.View();
+                input.Countries = this.countriesService.GetAll();
+                input.Genres = this.genresService.GetAll();
+                input.ArtistStatuses = this.artistStatusesService.GetAll();
+                return this.View(input);
             }
 
             return this.Redirect("/");
