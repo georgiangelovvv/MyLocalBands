@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Artists;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyLocalBands.Controllers
 {
@@ -11,14 +12,18 @@ namespace MyLocalBands.Controllers
         private readonly ICountriesService countriesService;
         private readonly IGenresService genresService;
         private readonly IArtistStatusesService artistStatusesService;
+        private readonly IArtistsService artistsService;
 
-        public ArtistsController(ICountriesService countriesService,
-                                 IGenresService genresService, 
-                                 IArtistStatusesService artistStatusesService)
+        public ArtistsController(
+            ICountriesService countriesService,
+            IGenresService genresService, 
+            IArtistStatusesService artistStatusesService,
+            IArtistsService artistsService)
         {
             this.countriesService = countriesService;
             this.genresService = genresService;
             this.artistStatusesService = artistStatusesService;
+            this.artistsService = artistsService;
         }
 
         public IActionResult Create()
@@ -31,7 +36,7 @@ namespace MyLocalBands.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateArtistInputModel input)
+        public async Task<IActionResult> Create(CreateArtistInputModel input)
         {
             if (!this.ModelState.IsValid) 
             {
@@ -40,6 +45,8 @@ namespace MyLocalBands.Controllers
                 input.ArtistStatuses = this.artistStatusesService.GetAll();
                 return this.View(input);
             }
+
+            await this.artistsService.CreateAsync(input);
 
             return this.Redirect("/");
         }
