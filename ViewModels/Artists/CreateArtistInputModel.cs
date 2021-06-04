@@ -9,15 +9,16 @@ namespace MyLocalBands.ViewModels.Artists
     public class CreateArtistInputModel
     {
         [Required]
-        [MinLength(3)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "{0} must be between {2} and {1} characters.")]
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Year of formation")]
         [CurrentYearRange(1960)]
         public int YearFormed { get; set; }
 
         [Required]
-        [MinLength(150)]
+        [StringLength(10000, MinimumLength = 150, ErrorMessage = "{0} must be between {2} and {1} characters.")]
         public string Biography { get; set; }
 
         [Required]
@@ -25,10 +26,13 @@ namespace MyLocalBands.ViewModels.Artists
         [MaxFileSize(3)]
         public IFormFile Image { get; set; }
 
+        [Display(Name = "Country")]
         public int CountryId { get; set; }
 
+        [Display(Name = "Genre")]
         public int GenreId { get; set; }
 
+        [Display(Name = "Status")]
         public int ArtistStatusId { get; set; }
 
         public IEnumerable<SelectListItem> Countries { get; set; }

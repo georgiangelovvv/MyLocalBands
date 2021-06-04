@@ -3,10 +3,7 @@ using MyLocalBands.Data;
 using MyLocalBands.Data.Models;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Artists;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Services

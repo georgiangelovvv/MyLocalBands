@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,6 +10,7 @@ namespace MyLocalBands.CustomValidation
         {
             this.MinYear = minYear;
             this.MaxYear = DateTime.UtcNow.Year;
+            this.ErrorMessage = $"Year must be between {this.MinYear} and {this.MaxYear}.";
         }
 
         public int MinYear { get; }
@@ -33,7 +33,9 @@ namespace MyLocalBands.CustomValidation
         public void AddValidation(ClientModelValidationContext context)
         {
             context.Attributes.Add("data-val", "true");
-            context.Attributes.Add("data-val-range", $"The field {context.ModelMetadata.Name} must be between {this.MinYear} and {this.MaxYear}.");
+            context.Attributes.Add("data-val-range", this.ErrorMessage != null ?
+                                                     this.ErrorMessage :
+                                                     $"The field {context.ModelMetadata.Name} must be between {this.MinYear} and {this.MaxYear}.");
             context.Attributes.Add("data-val-range-max", this.MaxYear.ToString());
             context.Attributes.Add("data-val-range-min", this.MinYear.ToString());
         }

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Artists;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Controllers
