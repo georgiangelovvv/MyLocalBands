@@ -18,6 +18,8 @@ namespace MyLocalBands.Data.Models
 
         public string Biography { get; set; }
 
+        public string CurrentMembers { get; set; }
+
         public int ArtistStatusId { get; set; }
 
         public ArtistStatus ArtistStatus { get; set; }

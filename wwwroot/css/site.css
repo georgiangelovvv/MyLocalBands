@@ -69,3 +69,36 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+@media all and (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: none;
+    }
+
+    .navbar .nav-item:hover .nav-link {
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        display: block;
+    }
+
+    .navbar .nav-item .dropdown-menu {
+        margin-top: 0;
+    }
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #e6e6e6;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: royalblue;
+}
+
+footer {
+    background-color: #BFDBF7;
+}
+
+

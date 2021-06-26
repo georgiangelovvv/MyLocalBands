@@ -31,6 +31,7 @@ namespace MyLocalBands.Services
                 Name = input.Name,
                 YearFormed = input.YearFormed,
                 Biography = input.Biography,
+                CurrentMembers = input.CurrentMembers,
                 ArtistStatusId = input.ArtistStatusId,
                 GenreId = input.GenreId,
                 CountryId = input.CountryId,

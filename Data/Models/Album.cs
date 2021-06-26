@@ -16,6 +16,8 @@ namespace MyLocalBands.Data.Models
 
         public DateTime ReleaseDate { get; set; }
 
+        public string Lineup { get; set; }
+
         public int ArtistId { get; set; }
 
         public Artist Artist { get; set; }

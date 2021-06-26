@@ -22,6 +22,11 @@
         <span asp-validation-for="Biography" class="text-danger"></span>
     </div>
     <div class="form-group">
+        <label asp-for="CurrentMembers"></label>
+        <textarea asp-for="CurrentMembers" class="form-control" rows="7"> </textarea>
+        <span asp-validation-for="CurrentMembers" class="text-danger"></span>
+    </div>
+    <div class="form-group">
         <label asp-for="Image"></label>
         <input asp-for="Image" class="form-control" />
         <span asp-validation-for="Image" class="text-danger"></span>
