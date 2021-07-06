@@ -3,7 +3,9 @@ using MyLocalBands.Data;
 using MyLocalBands.Data.Models;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Artists;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Services
@@ -55,6 +57,29 @@ namespace MyLocalBands.Services
 
             await this.db.Artists.AddAsync(artist);
             await this.db.SaveChangesAsync();
+        }
+
+        public IEnumerable<ArtistInListViewModel> GetAll(int page, int itemsPerPage = 12)
+        {
+            var artists = this.db.Artists.OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(x => new ArtistInListViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CountryName = x.Country.Name,
+                    GenreName = x.Genre.Name,
+                    ImagePath = $"{x.Picture.Id}{x.Picture.Extension}"
+                })
+                .ToList();
+
+            return artists;
+        }
+
+        public int GetCount()
+        {
+            return this.db.Artists.Count();
         }
     }
 }

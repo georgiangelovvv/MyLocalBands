@@ -14,7 +14,7 @@ namespace MyLocalBands.Controllers
 
         public ArtistsController(
             ICountriesService countriesService,
-            IGenresService genresService, 
+            IGenresService genresService,
             IArtistStatusesService artistStatusesService,
             IArtistsService artistsService)
         {
@@ -36,7 +36,7 @@ namespace MyLocalBands.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateArtistInputModel input)
         {
-            if (!this.ModelState.IsValid) 
+            if (!this.ModelState.IsValid)
             {
                 input.Countries = this.countriesService.GetAll();
                 input.Genres = this.genresService.GetAll();
@@ -47,6 +47,21 @@ namespace MyLocalBands.Controllers
             await this.artistsService.CreateAsync(input);
 
             return this.Redirect("/");
+        }
+
+        public IActionResult All(int id = 1)
+        {
+            var itemsPerPage = 12;
+
+            var viewModel = new ArtistsListViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ArtistsCount = this.artistsService.GetCount(),
+                Artists = this.artistsService.GetAll(id, itemsPerPage)
+            };
+
+            return this.View(viewModel);
         }
     }
 }

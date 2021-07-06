@@ -101,4 +101,9 @@ footer {
     background-color: #BFDBF7;
 }
 
+.img-resize {
+    height: 175px;
+    object-fit: cover;
+}
+
 
