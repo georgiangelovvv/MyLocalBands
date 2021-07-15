@@ -6,5 +6,7 @@ namespace MyLocalBands.Services.Contracts
     public interface ICountriesService
     {
         IEnumerable<SelectListItem> GetAll();
+
+        bool IsIdPresent(int id);
     }
 }

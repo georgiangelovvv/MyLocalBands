@@ -1,0 +1,78 @@
+﻿@model MyLocalBands.ViewModels.Artists.ArtistDetailsViewModel
+@{
+    this.ViewData["Title"] = this.Model.Name;
+}
+
+<div class="container">
+    <h1 class="my-4 text-center display-4 ">
+        @this.Model.Name
+    </h1>
+    <div class="row">
+        <div class="col-md-7">
+            <img class="img-fluid shadow-lg p-2 mb-1 bg-white" src="~/img/artists/@this.Model.ImagePath" alt="@this.Model.Name">
+        </div>
+        <div class="col-md-4 offset-1 shadow-lg p-1 mb-1 bg-white rounded border">
+            <div class="ml-1 mt-2">
+                <h4>Country: <small>@this.Model.CountryName</small></h4>
+                <h4>Year formed: <small>@this.Model.YearFormed</small></h4>
+                <h4>
+                    Status: <small id="statusColor" class="badge badge-pill">@this.Model.ArtistStatusName</small>
+                </h4>
+                <h4>Genre: <small>@this.Model.GenreName</small></h4>
+                <h4>
+                    @if (this.Model.ArtistStatusName == "Active")
+                    {
+                        <text>Current members:</text>
+                    }
+                    else
+                    {
+                        <text>Last known lineup:</text>
+                    }
+                </h4>
+                <ul class="list-unstyled">
+                    <li class="h6 font-italic font-weight-normal">@this.Model.CurrentMembers</li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4">
+        <h2 class="my-4">Biography</h2>
+        @if (this.Model.Biography.Length > 1000)
+        {
+            <p>@this.Model.Biography.Substring(0, 500)<span id="dots">...</span><span id="more">@this.Model.Biography.Substring(500, this.Model.Biography.Length - 500)</span></p>
+            <button class="btn btn-info btn-sm mb-4" onclick="readMoreFunction()" id="myBtn">Read more</button>
+        }
+        else
+        {
+            <p>@this.Model.Biography</p>
+        }
+    </div>
+</div>
+<div class="container">
+    <h1 class="mb-4 text-center">
+        Discography
+    </h1>
+    <table class="table table-hover table-sm">
+        <thead class="thead-color">
+            <tr>
+                <th class="pl-3 text-white" scope="col">Name</th>
+                <th class="text-left text-white" scope="col">Year</th>
+                <th class="text-center text-white" scope="col">Type</th>
+                <th class="text-center text-white" scope="col">Total tracks</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var album in this.Model.Albums)
+            {
+                <tr class="table-albums @if (album.Type == "Full-length") {<text> font-weight-bold</text>}">
+                    <td class="pl-3">@album.Name</td>
+                    <td class="text-left">@album.Year</td>
+                    <td class="text-center">@album.Type</td>
+                    <td class="text-center">@album.SongsCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -106,4 +106,22 @@ footer {
     object-fit: cover;
 }
 
+#more {
+    display: none;
+}
+
+.card-shadow:hover {
+    -webkit-box-shadow: 0 4px 15px rgba(153, 153, 153, 0.3);
+    box-shadow: 0 4px 15px rgba(153, 153, 153, 0.8);
+    -webkit-transition: .2s;
+    transition: .2s
+}
+
+.table-albums {
+    border-bottom: double #dddddd;
+}
+
+.thead-color {
+    background-color: royalblue;
+}
 

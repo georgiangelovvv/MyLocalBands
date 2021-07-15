@@ -36,6 +36,21 @@ namespace MyLocalBands.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateArtistInputModel input)
         {
+            if (!this.countriesService.IsIdPresent(input.CountryId))
+            {
+                this.ModelState.AddModelError(nameof(input.CountryId), "Country does not exist.");
+            }
+
+            if (!this.genresService.IsIdPresent(input.GenreId))
+            {
+                this.ModelState.AddModelError(nameof(input.GenreId), "Genre does not exist.");
+            }
+
+            if (!this.artistStatusesService.IsIdPresent(input.ArtistStatusId))
+            {
+                this.ModelState.AddModelError(nameof(input.ArtistStatusId), "Status does not exist.");
+            }
+
             if (!this.ModelState.IsValid)
             {
                 input.Countries = this.countriesService.GetAll();
@@ -62,6 +77,13 @@ namespace MyLocalBands.Controllers
             };
 
             return this.View(viewModel);
+        }
+
+        public IActionResult ById(int id)
+        {
+            var artist = this.artistsService.GetById(id);
+
+            return this.View(artist);
         }
     }
 }

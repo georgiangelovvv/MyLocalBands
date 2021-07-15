@@ -28,5 +28,10 @@ namespace MyLocalBands.Services
 
             return allGenres;
         }
+
+        public bool IsIdPresent(int id)
+        {
+            return this.db.Genres.Any(g => g.Id == id);
+        }
     }
 }

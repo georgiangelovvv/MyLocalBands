@@ -1,6 +1,6 @@
 ﻿@model MyLocalBands.ViewModels.Artists.ArtistsListViewModel
 @{
-    ViewData["Title"] = $"All Artists, page {Model.PageNumber}";
+    ViewData["Title"] = $"All Artists, page {this.Model.PageNumber}";
 }
 
 <h1>@this.ViewData["Title"]</h1>
@@ -8,12 +8,15 @@
 <div class="row">
     @foreach (var artist in this.Model.Artists)
     {
-        <div class="col-md-3" style="width: 18rem;">
-            <img class="card-img-top img-resize" src="~/img/artists/@artist.ImagePath" alt="Artist image">
-            <div class="card-body">
-                <h5 class="card-title text-center">@artist.Name.ToUpper()</h5>
-                <p class="card-text text-center">Country: @artist.CountryName</p>
-                <p class="card-text text-center"><strong>Genre: @artist.GenreName</strong></p>
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card card-shadow">
+                <a class="text-decoration-none text-dark" asp-action="ById" asp-route-id="@artist.Id">
+                    <img src="~/img/artists/@artist.ImagePath" class="card-img-top img-resize" alt="@artist.Name">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0">@artist.Name.ToUpper()</h5>
+                        <div class="card-text text-black-50">Genre: @artist.GenreName</div>
+                    </div>
+                </a>
             </div>
         </div>
     }

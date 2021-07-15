@@ -27,5 +27,10 @@ namespace MyLocalBands.Services
 
             return allArtistStatuses;
         }
+
+        public bool IsIdPresent(int id)
+        {
+            return this.db.ArtistStatuses.Any(a => a.Id == id);
+        }
     }
 }

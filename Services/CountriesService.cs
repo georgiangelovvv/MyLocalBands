@@ -27,5 +27,10 @@ namespace MyLocalBands.Services
 
             return allCountries;
         }
+
+        public bool IsIdPresent(int id)
+        {
+            return this.db.Countries.Any(c => c.Id == id);
+        }
     }
 }

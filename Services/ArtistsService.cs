@@ -77,6 +77,37 @@ namespace MyLocalBands.Services
             return artists;
         }
 
+        public ArtistDetailsViewModel GetById(int id)
+        {
+            // check order by for albums
+            var artist = this.db.Artists.Where(a => a.Id == id)
+                .Select(x => new ArtistDetailsViewModel
+                {
+                    Name = x.Name,
+                    YearFormed = x.YearFormed,
+                    CountryName = x.Country.Name,
+                    Biography = x.Biography,
+                    ArtistStatusName = x.ArtistStatus.Name,
+                    GenreName = x.Genre.Name,
+                    CurrentMembers = x.CurrentMembers,
+                    ImagePath = $"{x.Picture.Id}{x.Picture.Extension}",
+                    Albums = x.Albums
+                    .OrderBy(y => y.ReleaseDate)
+                    .Select(r => new DiscographyViewModel
+                    {
+                        Name = r.Name,
+                        Type = r.AlbumType.Name,
+                        Year = r.ReleaseDate.Year,
+                        SongsCount = r.Songs.Count,
+                        AlbumId = r.Id
+                    })
+                    .ToList()
+                })
+                .FirstOrDefault();
+
+            return artist;
+        }
+
         public int GetCount()
         {
             return this.db.Artists.Count();

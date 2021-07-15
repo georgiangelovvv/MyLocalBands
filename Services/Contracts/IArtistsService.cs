@@ -11,5 +11,7 @@ namespace MyLocalBands.Services.Contracts
         IEnumerable<ArtistInListViewModel> GetAll(int page, int itemsPerPage = 12);
 
         int GetCount();
+
+        ArtistDetailsViewModel GetById(int id);
     }
 }
