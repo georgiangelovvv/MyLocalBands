@@ -79,7 +79,6 @@ namespace MyLocalBands.Services
 
         public ArtistDetailsViewModel GetById(int id)
         {
-            // check order by for albums
             var artist = this.db.Artists.Where(a => a.Id == id)
                 .Select(x => new ArtistDetailsViewModel
                 {
