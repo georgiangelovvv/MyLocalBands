@@ -23,7 +23,7 @@ namespace MyLocalBands.ViewModels.Artists
 
         [Required]
         [Display(Name = "Current members / Last known lineup", Prompt = "e.g. First name Last name - instrument")]
-        [StringLength(500, MinimumLength = 20, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+        [StringLength(500, MinimumLength = 15, ErrorMessage = "{0} must be between {2} and {1} characters.")]
         public string CurrentMembers { get; set; }
 
         [Required]

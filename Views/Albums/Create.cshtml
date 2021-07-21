@@ -1,0 +1,76 @@
+﻿@model MyLocalBands.ViewModels.Albums.CreateAlbumInputModel
+@{
+    ViewData["Title"] = "Create new album";
+}
+
+<form method="post" class="col-md-8 offset-md-2" autocomplete="off" enctype="multipart/form-data">
+    <h1>Create new album for...</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AlbumTypeId"></label>
+        <select asp-for="AlbumTypeId" asp-items="@this.Model.AlbumTypes" class="form-control"> </select>
+        <span asp-validation-for="AlbumTypeId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReleaseDate"></label>
+        <input asp-for="ReleaseDate" class="form-control" />
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Artwork"></label>
+        <input asp-for="Artwork" class="form-control" />
+        <span asp-validation-for="Artwork" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lineup"></label>
+        <textarea asp-for="Lineup" class="form-control" rows="7"> </textarea>
+        <span asp-validation-for="Lineup" class="text-danger"></span>
+    </div>
+    <label asp-for="Songs"></label>
+    <div class="multi-field-wrapper">
+        <div class="multi-fields">
+            <div class="multi-field row my-3">
+                <div class="col-md-1 pr-0">
+                    <input type="text" name="Songs[0].TrackNumber" placeholder="№" class="form-control text-center">
+                </div>
+                <div class="col-md-4 px-2">
+                    <input type="text" name="Songs[0].Title" placeholder="Song title" class="form-control">
+                </div>
+                <div class="col-md-1 pl-0 pr-2">
+                    <input type="text" name="Songs[0].Minutes" placeholder="Min" class="form-control text-center">
+                </div>
+                <div class="col-md-1 pl-0 pr-2">
+                    <input type="text" name="Songs[0].Seconds" placeholder="Sec" class="form-control text-center">
+                </div>
+                <div class="col-md-4 pl-0">
+                    <input type="text" name="Songs[0].YoutubeLink" placeholder="Youtube link" class="form-control">
+                </div>
+                <button type="button" class="remove-field btn btn-danger px-3 ml-2">-</button>
+            </div>
+        </div>
+        <button type="button" class="add-field btn btn-success float-right">+</button>
+    </div>
+
+    <input type="submit" class="btn btn-primary my-4" />
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script>
+        $('.multi-field-wrapper').each(function () {
+            var $wrapper = $('.multi-fields', this);
+            $(".add-field", $(this)).click(function (e) {
+                $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('');
+            });
+            $('.multi-field .remove-field', $wrapper).click(function () {
+                if ($('.multi-field', $wrapper).length > 1)
+                    $(this).parent('.multi-field').remove();
+            });
+        });
+    </script>
+}

@@ -44,6 +44,7 @@ namespace MyLocalBands
             services.AddTransient<IArtistStatusesService, ArtistStatusesService>();
             services.AddTransient<IArtistsService, ArtistsService>();
             services.AddTransient<IAlbumsService, AlbumsService>();
+            services.AddTransient<IAlbumTypesService, AlbumTypesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
