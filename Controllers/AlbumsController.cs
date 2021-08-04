@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Albums;
+using System.Threading.Tasks;
 
 namespace MyLocalBands.Controllers
 {
@@ -8,12 +9,15 @@ namespace MyLocalBands.Controllers
     {
         private readonly IAlbumsService albumsService;
         private readonly IAlbumTypesService albumTypesService;
+        private readonly IArtistsService artistsService;
 
         public AlbumsController(IAlbumsService albumsService, 
-                                IAlbumTypesService albumTypesService)
+                                IAlbumTypesService albumTypesService,
+                                IArtistsService artistsService)
         {
             this.albumsService = albumsService;
             this.albumTypesService = albumTypesService;
+            this.artistsService = artistsService;
         }
 
         public IActionResult ById(int id)
@@ -26,13 +30,16 @@ namespace MyLocalBands.Controllers
         public IActionResult Create(int id)
         {
             var inputModel = new CreateAlbumInputModel();
+            inputModel.ArtistName = this.artistsService.GetName(id);
             inputModel.AlbumTypes = this.albumTypesService.GetAll();
             return this.View(inputModel);
         }
 
         [HttpPost]
-        public IActionResult Create(CreateAlbumInputModel input)
+        public async Task<IActionResult> Create(int id, CreateAlbumInputModel input)
         {
+            input.ArtistId = id;
+
             if (!this.albumTypesService.IsIdPresent(input.AlbumTypeId))
             {
                 this.ModelState.AddModelError(nameof(input.AlbumTypeId), "Album type does not exist.");
@@ -40,13 +47,15 @@ namespace MyLocalBands.Controllers
 
             if (!this.ModelState.IsValid)
             {
+                input.ArtistName = this.artistsService.GetName(id);
                 input.AlbumTypes = this.albumTypesService.GetAll();
 
                 return this.View(input);
             }
 
-            //return this.Redirect("/");
-            return this.Json(input);
+            await this.albumsService.CreateAsync(input);
+
+            return this.Redirect("/");
         }
     }
 }

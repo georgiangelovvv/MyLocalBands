@@ -111,5 +111,10 @@ namespace MyLocalBands.Services
         {
             return this.db.Artists.Count();
         }
+
+        public string GetName(int id)
+        {
+            return this.db.Artists.Where(a => a.Id == id).Select(x => x.Name).FirstOrDefault();
+        }
     }
 }

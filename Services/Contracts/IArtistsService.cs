@@ -13,5 +13,7 @@ namespace MyLocalBands.Services.Contracts
         int GetCount();
 
         ArtistDetailsViewModel GetById(int id);
+
+        string GetName(int id);
     }
 }

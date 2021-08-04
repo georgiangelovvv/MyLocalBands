@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MyLocalBands.Services;
 using MyLocalBands.ViewModels;
+using MyLocalBands.ViewModels.Albums;
 using System.Diagnostics;
 
 namespace MyLocalBands.Controllers
@@ -23,9 +24,14 @@ namespace MyLocalBands.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy(CreateAlbumInputModel input)
         {
-            return View();
+            if (!this.ModelState.IsValid)
+            {
+                return View(input);
+            }
+
+            return this.Redirect("/");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

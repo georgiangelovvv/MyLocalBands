@@ -82,6 +82,7 @@ namespace MyLocalBands.Controllers
         public IActionResult ById(int id)
         {
             var artist = this.artistsService.GetById(id);
+            artist.ArtistId = id;
 
             return this.View(artist);
         }

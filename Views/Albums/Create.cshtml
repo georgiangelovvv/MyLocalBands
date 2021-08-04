@@ -3,74 +3,65 @@
     ViewData["Title"] = "Create new album";
 }
 
-<form method="post" class="col-md-8 offset-md-2" autocomplete="off" enctype="multipart/form-data">
-    <h1>Create new album for...</h1>
-    <div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" id="my-form" class="col-md-8 offset-md-2" autocomplete="off" enctype="multipart/form-data">
+    <h1>@this.Model.ArtistName - add new release</h1>
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label for="Name">Name</label>
+        <input class="form-control" type="text" id="Name" name="Name">
     </div>
     <div class="form-group">
-        <label asp-for="AlbumTypeId"></label>
-        <select asp-for="AlbumTypeId" asp-items="@this.Model.AlbumTypes" class="form-control"> </select>
-        <span asp-validation-for="AlbumTypeId" class="text-danger"></span>
+        <label for="AlbumTypeId">Album type</label>
+        <select class="form-control" asp-items="@this.Model.AlbumTypes" id="AlbumTypeId" name="AlbumTypeId"> </select>
     </div>
     <div class="form-group">
-        <label asp-for="ReleaseDate"></label>
-        <input asp-for="ReleaseDate" class="form-control" />
-        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+        <label for="ReleaseDate">Release date</label>
+        <span class="tooltip-custom" title="Choose year between 1960 and @(DateTime.UtcNow.Year + 2).">
+            <span class="badge badge-warning">!!!</span>
+        </span>
+        <input class="form-control" type="date" id="ReleaseDate" name="ReleaseDate">
     </div>
     <div class="form-group">
-        <label asp-for="Artwork"></label>
-        <input asp-for="Artwork" class="form-control" />
-        <span asp-validation-for="Artwork" class="text-danger"></span>
+        <label for="Artwork">Artwork</label>
+        <span class="tooltip-custom" title="Only &quot;.PNG, .JPG, .JPEG&quot; files are allowed. Max file size is 2 MB.">
+            <span class="badge badge-warning">!!!</span>
+        </span>
+        <input class="form-control" type="file" accept=".png, .jpg, .jpeg" id="Artwork" name="Artwork">
     </div>
     <div class="form-group">
-        <label asp-for="Lineup"></label>
-        <textarea asp-for="Lineup" class="form-control" rows="7"> </textarea>
-        <span asp-validation-for="Lineup" class="text-danger"></span>
+        <label for="Lineup">Lineup</label>
+        <textarea class="form-control" rows="7" id="Lineup" name="Lineup" placeholder="e.g. First name Last name - instrument"></textarea>
     </div>
-    <label asp-for="Songs"></label>
+    <label for="Songs">Songs</label>
     <div class="multi-field-wrapper">
         <div class="multi-fields">
-            <div class="multi-field row my-3">
+            <div class="multi-field row my-3 align-items-baseline">
                 <div class="col-md-1 pr-0">
-                    <input type="text" name="Songs[0].TrackNumber" placeholder="№" class="form-control text-center">
+                    <input type="hidden" name="Songs.Index" class="hidIndex" value="0" />
+                    <input name="Songs[0].TrackNumber" placeholder="№" class="track-number track-input form-control text-center">
                 </div>
                 <div class="col-md-4 px-2">
-                    <input type="text" name="Songs[0].Title" placeholder="Song title" class="form-control">
+                    <input name="Songs[0].Title" placeholder="Song title" class="track-title track-input form-control">
                 </div>
                 <div class="col-md-1 pl-0 pr-2">
-                    <input type="text" name="Songs[0].Minutes" placeholder="Min" class="form-control text-center">
+                    <input name="Songs[0].Minutes" placeholder="Min" class="track-duration track-input form-control text-center">
                 </div>
                 <div class="col-md-1 pl-0 pr-2">
-                    <input type="text" name="Songs[0].Seconds" placeholder="Sec" class="form-control text-center">
+                    <input name="Songs[0].Seconds" placeholder="Sec" class="track-duration track-input form-control text-center">
                 </div>
                 <div class="col-md-4 pl-0">
-                    <input type="text" name="Songs[0].YoutubeLink" placeholder="Youtube link" class="form-control">
+                    <input name="Songs[0].YoutubeLink" placeholder="Youtube link" class="youtube-link track-input form-control">
                 </div>
-                <button type="button" class="remove-field btn btn-danger px-3 ml-2">-</button>
+                <button type="button" class="remove-field btn btn-danger px-3 ml-2 font-weight-bold">-</button>
             </div>
         </div>
-        <button type="button" class="add-field btn btn-success float-right">+</button>
+        <button type="button" class="add-field btn btn-success float-right font-weight-bold">+</button>
     </div>
 
-    <input type="submit" class="btn btn-primary my-4" />
+    <input type="submit" id="submit-button" class="btn btn-primary my-4" />
 </form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script>
-        $('.multi-field-wrapper').each(function () {
-            var $wrapper = $('.multi-fields', this);
-            $(".add-field", $(this)).click(function (e) {
-                $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('');
-            });
-            $('.multi-field .remove-field', $wrapper).click(function () {
-                if ($('.multi-field', $wrapper).length > 1)
-                    $(this).parent('.multi-field').remove();
-            });
-        });
-    </script>
 }
+<script src="~/js/dynamicInputGenerator.js"></script>
+<script src="~/js/dynamicFieldsValidator.js"></script>

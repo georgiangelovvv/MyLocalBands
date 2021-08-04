@@ -6,6 +6,8 @@ namespace MyLocalBands.ViewModels.Artists
     {
         public string Name { get; set; }
 
+        public int ArtistId { get; set; }
+
         public int YearFormed { get; set; }
 
         public string CountryName { get; set; }

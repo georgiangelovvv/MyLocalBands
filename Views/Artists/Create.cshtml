@@ -28,6 +28,9 @@
     </div>
     <div class="form-group">
         <label asp-for="Image"></label>
+        <span class="tooltip-custom" title="Only &quot;.PNG, .JPG, .JPEG&quot; files are allowed. Max file size is 3 MB.">
+            <span class="badge badge-warning">!!!</span>
+        </span>
         <input asp-for="Image" class="form-control" />
         <span asp-validation-for="Image" class="text-danger"></span>
     </div>
