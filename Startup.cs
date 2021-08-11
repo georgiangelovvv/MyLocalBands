@@ -20,7 +20,6 @@ namespace MyLocalBands
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -31,6 +30,7 @@ namespace MyLocalBands
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
             });
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -45,9 +45,9 @@ namespace MyLocalBands
             services.AddTransient<IArtistsService, ArtistsService>();
             services.AddTransient<IAlbumsService, AlbumsService>();
             services.AddTransient<IAlbumTypesService, AlbumTypesService>();
+            services.AddTransient<IErrorsService, ErrorsService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -64,9 +64,11 @@ namespace MyLocalBands
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseStatusCodePagesWithReExecute("/Errors/Display", "?statusCode={0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

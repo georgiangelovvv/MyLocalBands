@@ -32,11 +32,14 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown">Artists</a>
                             <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                    <a class="dropdown-item" asp-area="" asp-controller="Artists" asp-action="Create">Create artist</a>
-                                </li>
+                                @if (this.User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Artists" asp-action="Create">Create artist</a>
+                                    </li>
+                                }
                                 <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Artists" asp-action="All">All Artists</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Artists" asp-action="All" asp-route-id="1">All Artists</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" asp-area="" asp-controller="Albums" asp-action="Create">Add new album</a>

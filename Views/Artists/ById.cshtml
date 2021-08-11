@@ -53,9 +53,12 @@
     <h1 class="mb-4 text-center">
         Discography
     </h1>
-    <div class="text-center mb-4 mt-0">
-        <a class="btn btn-outline-success rounded-pill font-weight-bold" asp-controller="Albums" asp-action="Create" asp-route-id="@this.Model.ArtistId">Add new release</a>
-    </div>
+    @if (this.Model.IsCreatorUserLogged)
+    {
+        <div class="text-center mb-4 mt-0">
+            <a class="btn btn-outline-success rounded-pill font-weight-bold" asp-controller="Albums" asp-action="Create" asp-route-id="@this.Model.ArtistId">Add new release</a>
+        </div>
+    }
     <table class="table table-hover table-sm">
         <thead class="thead-color">
             <tr>

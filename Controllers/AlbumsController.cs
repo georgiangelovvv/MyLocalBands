@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Albums;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Controllers
@@ -11,7 +12,7 @@ namespace MyLocalBands.Controllers
         private readonly IAlbumTypesService albumTypesService;
         private readonly IArtistsService artistsService;
 
-        public AlbumsController(IAlbumsService albumsService, 
+        public AlbumsController(IAlbumsService albumsService,
                                 IAlbumTypesService albumTypesService,
                                 IArtistsService artistsService)
         {
@@ -22,23 +23,56 @@ namespace MyLocalBands.Controllers
 
         public IActionResult ById(int id)
         {
-            var album = this.albumsService.GetById(id);
+            if (!this.albumsService.IsIdPresent(id))
+            {
+                return this.StatusCode(404);
+            }
 
-            return this.View(album);
+            var albumViewModel = this.albumsService.GetById(id);
+
+            return this.View(albumViewModel);
         }
 
-        public IActionResult Create(int id)
+        [Route("/Albums/Create/{artistId}")]
+        public IActionResult Create(int artistId)
         {
+            if (!this.artistsService.IsIdPresent(artistId))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(artistId);
+
+            if (userId == null || userId != createdByUserId)
+            {
+                return this.StatusCode(403);
+            }
+
             var inputModel = new CreateAlbumInputModel();
-            inputModel.ArtistName = this.artistsService.GetName(id);
+            inputModel.ArtistName = this.artistsService.GetName(artistId);
             inputModel.AlbumTypes = this.albumTypesService.GetAll();
             return this.View(inputModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(int id, CreateAlbumInputModel input)
+        [Route("/Albums/Create/{artistId}")]
+        public async Task<IActionResult> Create(int artistId, CreateAlbumInputModel input)
         {
-            input.ArtistId = id;
+            if (!this.artistsService.IsIdPresent(artistId))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(artistId);
+
+            if (userId == null || userId != createdByUserId)
+            {
+                return this.StatusCode(403);
+            }
+
+            input.ArtistId = artistId;
 
             if (!this.albumTypesService.IsIdPresent(input.AlbumTypeId))
             {
@@ -47,7 +81,7 @@ namespace MyLocalBands.Controllers
 
             if (!this.ModelState.IsValid)
             {
-                input.ArtistName = this.artistsService.GetName(id);
+                input.ArtistName = this.artistsService.GetName(artistId);
                 input.AlbumTypes = this.albumTypesService.GetAll();
 
                 return this.View(input);
@@ -55,7 +89,9 @@ namespace MyLocalBands.Controllers
 
             await this.albumsService.CreateAsync(input);
 
-            return this.Redirect("/");
+            var albumId = input.AlbumId;
+
+            return this.RedirectToAction(nameof(this.ById), new { id = albumId });
         }
     }
 }

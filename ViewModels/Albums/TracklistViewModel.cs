@@ -9,5 +9,7 @@ namespace MyLocalBands.ViewModels.Albums
         public string Title { get; set; }
 
         public TimeSpan Length { get; set; }
+
+        public string YoutubeVideoLinkId { get; set; }
     }
 }

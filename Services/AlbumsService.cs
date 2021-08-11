@@ -4,8 +4,6 @@ using MyLocalBands.Data.Models;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Albums;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -78,6 +76,8 @@ namespace MyLocalBands.Services
 
             await this.db.Albums.AddAsync(album);
             await this.db.SaveChangesAsync();
+
+            input.AlbumId = album.Id;
         }
 
         public AlbumDetailsViewModel GetById(int id)
@@ -99,7 +99,8 @@ namespace MyLocalBands.Services
                     {
                         TrackNumber = s.TrackNumber,
                         Title = s.Title,
-                        Length = s.Length
+                        Length = s.Length,
+                        YoutubeVideoLinkId = s.YouTubeVideoLinkId
                     })
                     .ToList()
                 })
@@ -108,6 +109,11 @@ namespace MyLocalBands.Services
             album.TotalAlbumLength = TimeSpan.FromSeconds((int)album.AllSongsLengths.Sum(x => x.TotalSeconds));
 
             return album;
+        }
+
+        public bool IsIdPresent(int id)
+        {
+            return this.db.Albums.Any(a => a.Id == id);
         }
     }
 }

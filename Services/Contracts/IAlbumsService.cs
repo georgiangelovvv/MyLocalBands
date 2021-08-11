@@ -8,5 +8,7 @@ namespace MyLocalBands.Services.Contracts
         Task CreateAsync(CreateAlbumInputModel input);
 
         AlbumDetailsViewModel GetById(int id);
+
+        bool IsIdPresent(int id);
     }
 }

@@ -40,6 +40,8 @@ namespace MyLocalBands.ViewModels.Artists
         [Display(Name = "Status")]
         public int ArtistStatusId { get; set; }
 
+        public int ArtistId { get; set; }
+
         public IEnumerable<SelectListItem> Countries { get; set; }
 
         public IEnumerable<SelectListItem> Genres { get; set; }

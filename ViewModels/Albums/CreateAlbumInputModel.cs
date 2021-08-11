@@ -37,5 +37,7 @@ namespace MyLocalBands.ViewModels.Albums
 
         [Required]
         public List<SongInputModel> Songs { get; set; }
+
+        public int AlbumId { get; set; }
     }
 }

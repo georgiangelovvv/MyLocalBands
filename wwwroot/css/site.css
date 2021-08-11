@@ -201,3 +201,11 @@ textarea.error:focus, input.error:focus {
     position: absolute;
     z-index: 99;
 }
+
+.error-code {
+    bottom: 60%;
+    color: #4686CC;
+    font-size: 96px;
+    line-height: 100px;
+    font-weight: bold;
+}

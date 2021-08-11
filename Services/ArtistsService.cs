@@ -23,7 +23,7 @@ namespace MyLocalBands.Services
             this.environment = environment;
         }
 
-        public async Task CreateAsync(CreateArtistInputModel input)
+        public async Task CreateAsync(CreateArtistInputModel input, string userId)
         {
             var imageExtension = Path.GetExtension(input.Image.FileName).ToLower();
             var savingDirectory = $"{this.environment.WebRootPath}/img/artists/";
@@ -37,6 +37,7 @@ namespace MyLocalBands.Services
                 ArtistStatusId = input.ArtistStatusId,
                 GenreId = input.GenreId,
                 CountryId = input.CountryId,
+                CreatedByUserId = userId,
                 Picture = new ArtistImage
                 {
                     Extension = imageExtension
@@ -57,6 +58,8 @@ namespace MyLocalBands.Services
 
             await this.db.Artists.AddAsync(artist);
             await this.db.SaveChangesAsync();
+
+            input.ArtistId = artist.Id;
         }
 
         public IEnumerable<ArtistInListViewModel> GetAll(int page, int itemsPerPage = 12)
@@ -112,9 +115,19 @@ namespace MyLocalBands.Services
             return this.db.Artists.Count();
         }
 
+        public string GetCreatedByUserId(int id)
+        {
+            return this.db.Artists.Where(a => a.Id == id).Select(x => x.CreatedByUserId).FirstOrDefault();
+        }
+
         public string GetName(int id)
         {
             return this.db.Artists.Where(a => a.Id == id).Select(x => x.Name).FirstOrDefault();
+        }
+
+        public bool IsIdPresent(int id)
+        {
+            return this.db.Artists.Any(a => a.Id == id);
         }
     }
 }

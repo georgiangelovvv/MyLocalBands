@@ -28,7 +28,15 @@
                         <tr>
                             <td class="pl-4">@song.TrackNumber</td>
                             <td>@song.Title</td>
-                            <td class="pl-4">@song.Length.ToString(@"mm\:ss")</td>
+                            <td class="pl-4">
+                                @song.Length.ToString(@"mm\:ss")
+                                @if (!string.IsNullOrWhiteSpace(song.YoutubeVideoLinkId))
+                                {
+                                    <a class="ml-3" href="https://www.youtube.com/watch?v=@song.YoutubeVideoLinkId" target="_blank">
+                                        <img src="~/img/other/YouTubeLogo.png" alt="Youtube Link" />
+                                    </a>
+                                }
+                            </td>
                         </tr>
                     }
 

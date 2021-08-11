@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using MyLocalBands.Data;
 using MyLocalBands.Services.Contracts;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

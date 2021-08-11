@@ -1,0 +1,21 @@
+﻿@model MyLocalBands.ViewModels.Errors.ErrorDetailsViewModel
+@{
+    this.ViewData["Title"] = $"Error {this.Model.StatusCode} - {this.Model.Title}";
+}
+
+<div class="text-center">
+    <div class="error-code mt-5 mb-3">@this.Model.StatusCode</div>
+    <h2 class="font-bold mb-3">@this.Model.Title</h2>
+
+    <div>
+        <h6 class="font-weight-normal mb-3">
+            @this.Model.Description
+        </h6>
+        <h6 class="font-weight-normal mb-3">
+            Click the button below to go back to the Homepage.
+        </h6>
+        <div>
+            <a href="/" class="btn btn-primary">Go back to Homepage</a>
+        </div>
+    </div>
+</div>

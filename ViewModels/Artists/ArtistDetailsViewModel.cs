@@ -22,6 +22,8 @@ namespace MyLocalBands.ViewModels.Artists
 
         public string Biography { get; set; }
 
+        public bool IsCreatorUserLogged { get; set; }
+
         public IEnumerable<DiscographyViewModel> Albums { get; set; }
     }
 }

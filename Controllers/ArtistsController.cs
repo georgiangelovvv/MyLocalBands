@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Artists;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Controllers
@@ -24,6 +26,7 @@ namespace MyLocalBands.Controllers
             this.artistsService = artistsService;
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             var inputModel = new CreateArtistInputModel();
@@ -34,6 +37,7 @@ namespace MyLocalBands.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreateArtistInputModel input)
         {
             if (!this.countriesService.IsIdPresent(input.CountryId))
@@ -59,13 +63,22 @@ namespace MyLocalBands.Controllers
                 return this.View(input);
             }
 
-            await this.artistsService.CreateAsync(input);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            return this.Redirect("/");
+            await this.artistsService.CreateAsync(input, userId);
+
+            var artistId = input.ArtistId;
+
+            return this.RedirectToAction(nameof(this.ById), new { id = artistId });
         }
 
         public IActionResult All(int id = 1)
         {
+            if (id < 1)
+            {
+                return this.StatusCode(404);
+            }
+
             var itemsPerPage = 12;
 
             var viewModel = new ArtistsListViewModel
@@ -81,8 +94,17 @@ namespace MyLocalBands.Controllers
 
         public IActionResult ById(int id)
         {
+            if (!this.artistsService.IsIdPresent(id))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(id);
+
             var artist = this.artistsService.GetById(id);
             artist.ArtistId = id;
+            artist.IsCreatorUserLogged = userId == createdByUserId;
 
             return this.View(artist);
         }

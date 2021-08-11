@@ -6,7 +6,7 @@ namespace MyLocalBands.Services.Contracts
 {
     public interface IArtistsService
     {
-        Task CreateAsync(CreateArtistInputModel input);
+        Task CreateAsync(CreateArtistInputModel input, string userId);
 
         IEnumerable<ArtistInListViewModel> GetAll(int page, int itemsPerPage = 12);
 
@@ -15,5 +15,9 @@ namespace MyLocalBands.Services.Contracts
         ArtistDetailsViewModel GetById(int id);
 
         string GetName(int id);
+
+        string GetCreatedByUserId(int id);
+
+        bool IsIdPresent(int id);
     }
 }
