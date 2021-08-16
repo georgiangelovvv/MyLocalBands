@@ -72,6 +72,79 @@ namespace MyLocalBands.Controllers
             return this.RedirectToAction(nameof(this.ById), new { id = artistId });
         }
 
+        public IActionResult Edit (int id)
+        {
+            if (!this.artistsService.IsIdPresent(id))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(id);
+
+            if (userId == null || userId != createdByUserId)
+            {
+                return this.StatusCode(403);
+            }
+
+            var inputModel = this.artistsService.GetEditInformation(id);
+            inputModel.Id = id;
+            inputModel.Countries = this.countriesService.GetAll();
+            inputModel.Genres = this.genresService.GetAll();
+            inputModel.ArtistStatuses = this.artistStatusesService.GetAll();
+            return this.View(inputModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, EditArtistInputModel input)
+        {
+            if (!this.artistsService.IsIdPresent(id))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(id);
+
+            if (userId == null || userId != createdByUserId)
+            {
+                return this.StatusCode(403);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                input.Id = id;
+                input.Countries = this.countriesService.GetAll();
+                input.Genres = this.genresService.GetAll();
+                input.ArtistStatuses = this.artistStatusesService.GetAll();
+                return this.View(input);
+            }
+
+            await this.artistsService.UpdateAsync(id, input);
+            return this.RedirectToAction(nameof(this.ById), new { id });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (!this.artistsService.IsIdPresent(id))
+            {
+                return this.StatusCode(404);
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var createdByUserId = this.artistsService.GetCreatedByUserId(id);
+
+            if (userId == null || userId != createdByUserId)
+            {
+                return this.StatusCode(403);
+            }
+
+            await this.artistsService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.All));
+        }
+
         public IActionResult All(int id = 1)
         {
             if (id < 1)

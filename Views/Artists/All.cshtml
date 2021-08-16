@@ -11,7 +11,7 @@
         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
             <div class="card card-shadow">
                 <a class="text-decoration-none text-dark" asp-action="ById" asp-route-id="@artist.Id">
-                    <img src="~/img/artists/@artist.ImagePath" class="card-img-top img-resize" alt="@artist.Name">
+                    <img src="~/img/artists/@artist.ImagePath" class="card-img-top img-resize" alt="@artist.Name" asp-append-version="true">
                     <div class="card-body text-center">
                         <h5 class="card-title mb-0">@artist.Name.ToUpper()</h5>
                         <div class="card-text text-black-50">Genre: @artist.GenreName</div>

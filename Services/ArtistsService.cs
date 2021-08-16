@@ -120,6 +120,92 @@ namespace MyLocalBands.Services
             return this.db.Artists.Where(a => a.Id == id).Select(x => x.CreatedByUserId).FirstOrDefault();
         }
 
+        public EditArtistInputModel GetEditInformation(int id)
+        {
+            var artist = this.db.Artists.Where(a => a.Id == id)
+                .Select(x => new EditArtistInputModel
+                {
+                    Name = x.Name,
+                    YearFormed = x.YearFormed,
+                    Biography = x.Biography,
+                    CurrentMembers = x.CurrentMembers,
+                    CountryId = x.CountryId,
+                    GenreId = x.GenreId,
+                    ArtistStatusId = x.ArtistStatusId
+                })
+                .FirstOrDefault();
+
+            return artist;
+        }
+
+        public async Task UpdateAsync(int id, EditArtistInputModel input)
+        {
+            var artist = this.db.Artists.Where(a => a.Id == id).FirstOrDefault();
+
+            if (input.Image != null)
+            {
+                var artistImage = this.db.ArtistImages.Where(a => a.ArtistId == id).FirstOrDefault();
+                var newImageExtension = Path.GetExtension(input.Image.FileName).ToLower();
+                var savingDirectory = $"{this.environment.WebRootPath}/img/artists/";
+                var oldImagePath = $"{savingDirectory}{artistImage.Id}{artistImage.Extension}";
+                var imageId = artistImage.Id;
+
+                if (File.Exists(oldImagePath))
+                {
+                    File.Delete(oldImagePath);
+                }
+
+                var filePath = $"{savingDirectory}{imageId}{newImageExtension}";
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await input.Image.CopyToAsync(fileStream);
+                }
+
+                artistImage.Extension = newImageExtension;
+            }
+
+            artist.Name = input.Name;
+            artist.YearFormed = input.YearFormed;
+            artist.Biography = input.Biography;
+            artist.CurrentMembers = input.CurrentMembers;
+            artist.CountryId = input.CountryId;
+            artist.GenreId = input.GenreId;
+            artist.ArtistStatusId = input.ArtistStatusId;
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var artist = this.db.Artists.Where(a => a.Id == id).FirstOrDefault();
+            var artistImageFileName = this.db.ArtistImages.Where(a => a.ArtistId == id).Select(x => $"{x.Id}{x.Extension}").FirstOrDefault();
+            var allAlbumIds = this.db.Albums.Where(a => a.ArtistId == id).Select(x => x.Id).ToList();
+            var allArtworkFileNames = this.db.AlbumArtworks.Where(a => allAlbumIds.Contains(a.AlbumId)).Select(x => $"{x.Id}{x.Extension}").ToList();
+            this.db.Artists.Remove(artist);
+            var rowsAffected = await this.db.SaveChangesAsync();
+
+            if (rowsAffected > 0)
+            {
+                var artistImageDirectory = $"{this.environment.WebRootPath}/img/artists/{artistImageFileName}";
+
+                if (File.Exists(artistImageDirectory))
+                {
+                    File.Delete(artistImageDirectory);
+                }
+
+                foreach (var artworkFileName in allArtworkFileNames)
+                {
+                    var artworkDirectory = $"{this.environment.WebRootPath}/img/albums/{artworkFileName}";
+
+                    if (File.Exists(artworkDirectory))
+                    {
+                        File.Delete(artworkDirectory);
+                    }
+                }
+            }
+        }
+
         public string GetName(int id)
         {
             return this.db.Artists.Where(a => a.Id == id).Select(x => x.Name).FirstOrDefault();

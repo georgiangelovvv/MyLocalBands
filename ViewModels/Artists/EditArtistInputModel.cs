@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyLocalBands.ViewModels.Artists
 {
-    public class CreateArtistInputModel : BaseArtistInputModel
+    public class EditArtistInputModel : BaseArtistInputModel
     {
-        [Required]
-        [AllowedExtensions(new string[] { ".png", ".jpg", ".jpeg" })]
-        [MaxFileSize(3)]
+        public int Id { get; set; }
+
+        
+        [AllowedExtensions(new string[] { ".png", ".jpg", ".jpeg" }, true)]
+        [MaxFileSize(3, true)]
         public IFormFile Image { get; set; }
     }
 }

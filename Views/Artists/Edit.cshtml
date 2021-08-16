@@ -1,0 +1,57 @@
+﻿@model MyLocalBands.ViewModels.Artists.EditArtistInputModel
+@{
+    ViewData["Title"] = "Edit artist";
+}
+
+<form method="post" class="col-md-8 offset-md-2" autocomplete="off" enctype="multipart/form-data">
+    <h1>Edit artist</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="YearFormed"></label>
+        <input asp-for="YearFormed" class="form-control" />
+        <span asp-validation-for="YearFormed" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Biography"></label>
+        <textarea asp-for="Biography" class="form-control" rows="5"> </textarea>
+        <span asp-validation-for="Biography" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CurrentMembers"></label>
+        <textarea asp-for="CurrentMembers" class="form-control" rows="7"> </textarea>
+        <span asp-validation-for="CurrentMembers" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image"></label>
+        <span class="tooltip-custom" title="Only &quot;.PNG, .JPG, .JPEG&quot; files are allowed. Max file size is 3 MB.">
+            <span class="badge badge-warning">!!!</span>
+        </span>
+        <input asp-for="Image" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CountryId"></label>
+        <select asp-for="CountryId" asp-items="@this.Model.Countries" class="form-control"> </select>
+        <span asp-validation-for="CountryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreId"></label>
+        <select asp-for="GenreId" asp-items="@this.Model.Genres" class="form-control"> </select>
+        <span asp-validation-for="GenreId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ArtistStatusId"></label>
+        <select asp-for="ArtistStatusId" asp-items="@this.Model.ArtistStatuses" class="form-control"> </select>
+        <span asp-validation-for="ArtistStatusId" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -19,5 +19,11 @@ namespace MyLocalBands.Services.Contracts
         string GetCreatedByUserId(int id);
 
         bool IsIdPresent(int id);
+
+        EditArtistInputModel GetEditInformation(int id);
+
+        Task UpdateAsync(int id, EditArtistInputModel input);
+
+        Task DeleteAsync(int id);
     }
 }
