@@ -46,6 +46,7 @@ namespace MyLocalBands
             services.AddTransient<IAlbumsService, AlbumsService>();
             services.AddTransient<IAlbumTypesService, AlbumTypesService>();
             services.AddTransient<IErrorsService, ErrorsService>();
+            services.AddTransient<ISearchService, SearchService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

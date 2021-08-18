@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyLocalBands.Services;
+using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels;
-using MyLocalBands.ViewModels.Albums;
 using System.Diagnostics;
 
 namespace MyLocalBands.Controllers
@@ -11,11 +11,13 @@ namespace MyLocalBands.Controllers
     {
         private readonly ILogger<HomeController> logger;
         private readonly IGetCountsService countsService;
+        private readonly ISearchService searchService;
 
-        public HomeController(ILogger<HomeController> logger, IGetCountsService countsService)
+        public HomeController(IGetCountsService countsService,
+                              ISearchService searchService)
         {
-            this.logger = logger;
             this.countsService = countsService;
+            this.searchService = searchService;
         }
 
         public IActionResult Index()
@@ -24,14 +26,11 @@ namespace MyLocalBands.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Privacy(CreateAlbumInputModel input)
+        public IActionResult Search(string query)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return View(input);
-            }
-
-            return this.Redirect("/");
+            var viewModel = this.searchService.Find(query);
+            viewModel.Query = query;
+            return this.View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

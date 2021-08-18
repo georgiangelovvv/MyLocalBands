@@ -109,6 +109,12 @@ footer {
     object-fit: cover;
 }
 
+.search-img {
+    float: left;
+    width: 100px;
+    object-fit: cover;
+}
+
 #more {
     display: none;
 }

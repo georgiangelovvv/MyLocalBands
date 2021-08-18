@@ -1,0 +1,42 @@
+﻿@model MyLocalBands.ViewModels.Home.SearchResultsViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<form asp-controller="Home" asp-action="Search" class="col-md-8 offset-2" method="get">
+    <h1>Search for Artists and Albums</h1>
+    <input type="text" name="query" class="form-control" value="@this.Model.Query" required />
+    <button type="submit" class="btn btn-success mt-2 mb-5">Search</button>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(this.Model.Query))
+{
+    <h5 class="mb-4 font-weight-normal font-italic">Search results for "@this.Model.Query":</h5>
+    <h4 class="rounded bg-success text-white py-1 pl-2 mb-4">Artists found: @this.Model.Artists.Count()</h4>
+    <div class="row">
+        @foreach (var artist in this.Model.Artists)
+        {
+            <div class="col-md-4 mb-4 pl-4">
+                <img class="mr-3 search-img" height="55" src="~/img/artists/@artist.ImagePath" alt="@artist.Name">
+                <div class="media-body">
+                    <h5 class="mt-0"><a asp-controller="Artists" asp-action="ById" asp-route-id="@artist.ArtistId">@artist.Name</a></h5>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h4 class="rounded bg-info text-white py-1 pl-2 mt-3 mb-4 ">Albums found: @this.Model.Albums.Count()</h4>
+    <div class="row">
+        @foreach (var album in this.Model.Albums)
+        {
+            <div class="col-md-4 mb-4 pl-4">
+                <img class="mr-3 search-img" height="100" src="~/img/albums/@album.ImagePath" alt="@album.Name">
+                <div class="media-body">
+                    <h5 class="mt-0"><a asp-controller="Albums" asp-action="ById" asp-route-id="@album.AlbumId">@album.Name</a></h5>
+                </div>
+            </div>
+        }
+    </div>
+}
+
