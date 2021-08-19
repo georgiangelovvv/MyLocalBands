@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using MyLocalBands.Services;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels;
@@ -9,20 +8,23 @@ namespace MyLocalBands.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IGetCountsService countsService;
         private readonly ISearchService searchService;
+        private readonly IAlbumsService albumsService;
 
         public HomeController(IGetCountsService countsService,
-                              ISearchService searchService)
+                              ISearchService searchService,
+                              IAlbumsService albumsService)
         {
             this.countsService = countsService;
             this.searchService = searchService;
+            this.albumsService = albumsService;
         }
 
         public IActionResult Index()
         {
             var viewModel = this.countsService.GetCounts();
+            viewModel.RandomAlbums = this.albumsService.GetRandom(9);
             return View(viewModel);
         }
 

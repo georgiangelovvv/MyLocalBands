@@ -1,4 +1,6 @@
 ﻿using MyLocalBands.ViewModels.Albums;
+using MyLocalBands.ViewModels.Home;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyLocalBands.Services.Contracts
@@ -10,5 +12,7 @@ namespace MyLocalBands.Services.Contracts
         AlbumDetailsViewModel GetById(int id);
 
         bool IsIdPresent(int id);
+
+        IEnumerable<IndexPageAlbumsViewModel> GetRandom(int count);
     }
 }

@@ -3,7 +3,9 @@ using MyLocalBands.Data;
 using MyLocalBands.Data.Models;
 using MyLocalBands.Services.Contracts;
 using MyLocalBands.ViewModels.Albums;
+using MyLocalBands.ViewModels.Home;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -109,6 +111,24 @@ namespace MyLocalBands.Services
             album.TotalAlbumLength = TimeSpan.FromSeconds((int)album.AllSongsLengths.Sum(x => x.TotalSeconds));
 
             return album;
+        }
+
+        public IEnumerable<IndexPageAlbumsViewModel> GetRandom(int count)
+        {
+            var albums = this.db.Albums
+                .OrderBy(a => Guid.NewGuid())
+                .Take(count)
+                .Select(x => new IndexPageAlbumsViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ArtistName = x.Artist.Name,
+                    GenreName = x.Artist.Genre.Name,
+                    ImagePath = $"{x.Artwork.Id}{x.Artwork.Extension}"
+                })
+                .ToList();
+
+            return albums;
         }
 
         public bool IsIdPresent(int id)
